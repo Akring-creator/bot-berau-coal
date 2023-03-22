@@ -1,0 +1,40 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import time
+
+option = webdriver.ChromeOptions()
+option.add_argument("-incognito")
+option.add_experimental_option("detach", True)
+
+browser = webdriver.Chrome(executable_path="D:\coding-lab-fast-track\selenium-bot\chromedriver.exe", options=option)
+browser.get("https://survey123.arcgis.com/share/91e223ca1b654ec5aa2a6debdb94c7a4")
+
+time.sleep(10)
+#print(browser.page_source)
+nama_program = browser.find_element('id', 'idp46375712')
+pic = browser.find_element('id', 'idp46376720')
+tanggal = browser.find_elements(By.CLASS_NAME, 'ignore.input-small.form-control')
+# print(tanggal)
+# tanggal[0].click()
+penerima_manfaat = browser.find_element('id', 'idp46371904')
+usia = browser.find_element('id', 'idp46372912')
+jenjang = browser.find_element('id', 'idp46099552')
+option_laki_laki = browser.find_element('id', 'idp46101712')
+option_perempuan = browser.find_element('id', 'idp46000672')
+# print(browser.page_source)
+posisi_tempat = browser.find_element(By.CLASS_NAME, 'esri-view-root')
+nama_kampung = browser.find_elements(By.CLASS_NAME, 'btn.btn-default.dropdown-toggle.clearfix')
+tombol_kirim = browser.find_element("id", 'validate-form')
+
+nama_program.send_keys('Tes Program')
+time.sleep(1)
+pic.send_keys('YDBBC')
+time.sleep(1)
+penerima_manfaat.send_keys('Ruhartini')
+time.sleep(1)
+usia.send_keys(100)
+time.sleep(1)
+jenjang.send_keys('S1')
+time.sleep(1)
+# posisi_tempat.send_keys('SAMBAKUNGAN')
+#tombol_kirim.click()
