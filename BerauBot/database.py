@@ -1,8 +1,9 @@
 import pandas as pd
 
-PATH_TO_FILE = 'D:\coding-lab-fast-track\selenium-bot\database.xlsx'
+PATH_TO_FILE = r'D:\coding-lab-fast-track\Bot\excel\Penerima Manfaat Trading Gabah.xlsx'
 
 df = pd.read_excel(PATH_TO_FILE)
-print(type(int(df['Tahun Masuk'][7])))
+print(df.columns)
+
 # for ind in df.index:
 #     print(df['Site'][ind])

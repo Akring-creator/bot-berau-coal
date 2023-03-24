@@ -1,7 +1,4 @@
-from BerauBot.umkm import Umkm
-from BerauBot.ppmprogram import Ppmprogram
-from BerauBot.scholarship import Scholarship
-from BerauBot.jobcentre import Jobcenter
+from BerauBot.Botclass import Jobcenter, Ppmprogram, Scholarship, Umkm, Asrama, PaketPendidikan, TradingGabah, SekolahGSM, WTP
 import time
 import pandas as pd
 import numpy as np
@@ -11,14 +8,16 @@ PATH_TO_SCHOLARSHIP_FILE = 'D:\coding-lab-fast-track\Bot\excel\Beasiswa.xlsx'
 PATH_TO_PPM_FILE = 'D:\coding-lab-fast-track\Bot\excel\Realisasi Program PPM 2022.xlsx'
 PATH_TO_JOB_CENTER_FILE = r'D:\coding-lab-fast-track\Bot\excel\UPDATE PESERTA JOB CENTRE PPKP.xlsx'
 PATH_TO_UMKM_FILE = 'D:\coding-lab-fast-track\Bot\excel\Penerima manfaat umkm.xlsx'
-
+PATH_TO_REKAP_ASRAMA_FILE = r'D:\coding-lab-fast-track\Bot\excel\REKAP ASRAM KAT.xlsx'
+PATH_TO_PAKET_FILE = r'D:\coding-lab-fast-track\Bot\excel\REKAP KEJAR PAKET C.xlsx'
+PATH_TO_TRADING_GABAH = r'D:\coding-lab-fast-track\Bot\excel\Penerima Manfaat Trading Gabah.xlsx'
+PATH_TO_sEKOLAH_GSM = r'D:\coding-lab-fast-track\Bot\excel\SEKOLAH GSM.xlsx'
 
 def cleaningFile(file):
     df = pd.read_excel(file)
     df = df.replace(np.nan, '')
+    # df = df.astype(str)
     return df
-
-
 def cleaningForScholarshipfILE(file=PATH_TO_SCHOLARSHIP_FILE):
     df = pd.read_excel(file)
     df['Semester'] = df['Semester'].replace(
@@ -27,8 +26,6 @@ def cleaningForScholarshipfILE(file=PATH_TO_SCHOLARSHIP_FILE):
     df = df.replace(np.nan, '')
 
     return df
-
-
 def umkmBot():
     with Umkm() as bot:
         file = cleaningFile(PATH_TO_UMKM_FILE)
@@ -52,8 +49,6 @@ def umkmBot():
             time.sleep(10)
             print(f'Good Data {ind+1}')
             # Good Data 7
-
-
 def ppmBot():
     with Ppmprogram() as bot:
         file = cleaningFile(PATH_TO_PPM_FILE)
@@ -73,8 +68,6 @@ def ppmBot():
             )
             time.sleep(10)
             print(f'Good Data {ind+1}')
-
-
 def scholarshipBot():
     with Scholarship() as bot:
         file = cleaningForScholarshipfILE(PATH_TO_SCHOLARSHIP_FILE)
@@ -102,8 +95,6 @@ def scholarshipBot():
             time.sleep(10)
             print(f'Good Data {ind+1}')
             # Good Data 7
-
-
 def jobCenterBot():
 
     with Jobcenter() as bot:
@@ -123,6 +114,85 @@ def jobCenterBot():
             time.sleep(5)
             bot.check_result()
             print(f'Insert Data Number {ind + 1} Success')
+def dormiBot():
+    with Asrama() as bot:
+        file = cleaningFile(PATH_TO_REKAP_ASRAMA_FILE)
+        for ind in range(0, len(file)):
+            bot.land_first_page()
+            time.sleep(10)
+            bot.insert_data(
+                name=file['NAMA'][ind],
+                school=file['SEKOLAH'][ind],
+                village=file['ASAL KAMPUNG'][ind],
+                coordinate=file['Koordinat'][ind],
+                dormitory=file['Asrama'][ind]
+            )
+            bot.input_data()
+            time.sleep(5)
+            print(f'Insert Data Number {ind + 1} Success')
+def paketBot():
+    with PaketPendidikan() as bot:
+        file = cleaningFile(PATH_TO_PAKET_FILE)
+        for ind in range(0, len(file)):
+            bot.land_first_page()
+            time.sleep(10)
+            bot.insert_data(
+                name=file['Nama'][ind],
+                village=file['Kampung'][ind],
+                coordinate=file['Koordinat'][ind],
+                paket=file['Kejar Paket'][ind]
+            )
+            bot.input_data()
+            time.sleep(5)
+            print(f'Insert Data Number {ind + 1} Success')
+def tradingGabah():
 
+    with TradingGabah() as bot:
+        file = cleaningFile(PATH_TO_TRADING_GABAH)
+        for ind in range(0, len(file)):
+            bot.land_first_page()
+            time.sleep(10)
+            bot.insert_data(
+                name=file['Nama'][ind],
+                village=file['Kampung'][ind],
+                coordinate=file['Koordinat'][ind],
+                reason=file['Alasan'][ind],
+                area=file['Luas Lahan'][ind],
+            )
+            bot.input_data()
+            time.sleep(5)
+            print(f'Insert Data Number {ind + 1} Success')
+def sekolahGSM():
 
-jobCenterBot()
+    with SekolahGSM() as bot:
+        file = cleaningFile(PATH_TO_sEKOLAH_GSM)
+        for ind in range(0, len(file)):
+            bot.land_first_page()
+            time.sleep(10)
+            bot.insert_data(
+                school=file['Sekolah'][ind],
+                village=file['Kampung'][ind],
+                pns=file['PNS'][ind],
+                ptt=file['PTT'][ind],
+                teacher_total=file['Total Guru'][ind],
+                student_total=file['Total Siswa'][ind]
+            )
+            bot.input_data()
+            time.sleep(5)
+            print(f'Insert Data Number {ind + 1} Success')
+def wtp():
+    with WTP() as bot:
+        file = cleaningFile(PATH_TO_PAKET_FILE)
+        for ind in range(0, len(file)):
+            bot.land_first_page()
+            time.sleep(10)
+            bot.insert_data(
+                name=file['Nama'][ind],
+                village=file['Kampung'][ind],
+                coordinate=file['Koordinat'][ind]
+            )
+            bot.input_data()
+            time.sleep(5)
+            print(f'Insert Data Number {ind + 1} Success')
+
+sekolahGSM()
