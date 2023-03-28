@@ -562,14 +562,15 @@ class WTP(webdriver.Chrome):
     def insert_data(self, name, village, coordinate):
         # Name
         selected_element = self.find_element(
-            By.ID, 'idp46738096')
+            By.ID, 'idp45807520')
         selected_element.send_keys(name)
 
         # Village
         selected_element = self.find_element(
-            By.ID, 'idp46741408')
+            By.ID, 'idp46712032')
         selected_element.send_keys(village)
 
+        time.sleep(5)
         # Map
         selected_element = self.find_element(
             By.CLASS_NAME, 'esri-search__input')

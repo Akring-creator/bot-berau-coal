@@ -12,7 +12,7 @@ PATH_TO_REKAP_ASRAMA_FILE = r'D:\coding-lab-fast-track\Bot\excel\REKAP ASRAM KAT
 PATH_TO_PAKET_FILE = r'D:\coding-lab-fast-track\Bot\excel\REKAP KEJAR PAKET C.xlsx'
 PATH_TO_TRADING_GABAH = r'D:\coding-lab-fast-track\Bot\excel\Penerima Manfaat Trading Gabah.xlsx'
 PATH_TO_sEKOLAH_GSM = r'D:\coding-lab-fast-track\Bot\excel\SEKOLAH GSM.xlsx'
-
+PATH_TO_WTP = r'D:\coding-lab-fast-track\Bot\excel\WTP.xlsx'
 def cleaningFile(file):
     df = pd.read_excel(file)
     df = df.replace(np.nan, '')
@@ -182,8 +182,8 @@ def sekolahGSM():
             print(f'Insert Data Number {ind + 1} Success')
 def wtp():
     with WTP() as bot:
-        file = cleaningFile(PATH_TO_PAKET_FILE)
-        for ind in range(0, len(file)):
+        file = cleaningFile(PATH_TO_WTP)
+        for ind in range(392, len(file)):
             bot.land_first_page()
             time.sleep(10)
             bot.insert_data(
@@ -194,5 +194,4 @@ def wtp():
             bot.input_data()
             time.sleep(5)
             print(f'Insert Data Number {ind + 1} Success')
-
-sekolahGSM()
+wtp()
